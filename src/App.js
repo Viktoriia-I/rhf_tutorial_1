@@ -13,7 +13,7 @@ const styles = {
 };
 
 function App() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors, formState } = useForm();
 
   function onSubmit(data) {
     console.log(data);
@@ -32,7 +32,7 @@ function App() {
             pattern: /^[a-zA-Z]+$/i,
           })}
           placeholder="Username"
-          style={styles.input}
+          style={{...styles.input, borderColor: errors.username && "red"}}
         />
         <input
           name="email"
@@ -41,7 +41,7 @@ function App() {
             validate: (input) => isEmail(input),
           })}
           placeholder="Email"
-          style={styles.input}
+          style={{...styles.input, borderColor: errors.email && "red"}}
         />
         <input
           name="password"
@@ -49,9 +49,9 @@ function App() {
             minLength: 6,
           })}
           placeholder="Password"
-          style={styles.input}
+          style={{...styles.input, borderColor: errors.password && "red"}}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={formState.isSubmitting}>Submit</button>
       </form>
     </div>
   );
