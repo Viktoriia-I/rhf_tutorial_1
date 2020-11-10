@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import isEmail from 'validator/lib/isEmail';
 
 const styles = {
   container: {
@@ -24,19 +25,29 @@ function App() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           name="username"
-          ref={register}
+          ref={register({
+            required: true,
+            minLength: 6,
+            maxLength: 20,
+            pattern: /^[a-zA-Z]+$/i,
+          })}
           placeholder="Username"
           style={styles.input}
         />
         <input
           name="email"
-          ref={register}
+          ref={register({
+            required: true,
+            validate: (input) => isEmail(input),
+          })}
           placeholder="Email"
           style={styles.input}
         />
         <input
           name="password"
-          ref={register}
+          ref={register({
+            minLength: 6,
+          })}
           placeholder="Password"
           style={styles.input}
         />
